@@ -39,8 +39,11 @@ if os.path.exists(data_path):
             character_data = characters[name]
             if name == "旅行者（空/荧）":
                 name = "旅行者"
-            write_path = os.path.join(data_path, "characters", name)
-            write_json(character_data, 'zh_CN', write_path)
+                write_path = os.path.join(data_path, "characters", name)
+                write_json(character_data, 'zh_CN', write_path)
+            else:
+                write_path = os.path.join(data_path, "characters", name)
+                write_json(character_data, 'zh_CN', write_path)
     elif inputs.lower() == "n" or inputs.lower() == "no":
         exit()
     else:
