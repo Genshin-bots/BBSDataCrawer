@@ -70,5 +70,5 @@ else:
     
    
 
-# 米游社数据分武器/角色保存v1.0.8
+# 米游社数据分武器/角色保存v1.0.10
 # 米游社数据爬取：https://github.com/SAGIRI-kawaii/GenshinInfoCrawer
