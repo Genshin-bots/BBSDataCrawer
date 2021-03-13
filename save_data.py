@@ -10,30 +10,19 @@ path_name = "datas"
 
 data_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], path_name)
 
-def find(target, dictData, notFound='没找到'):
-    queue = [dictData]
-    while len(queue) > 0:
-        data = queue.pop()
-        for key, value in data.items():
-            if key == target: return value
-            elif type(value) == dict: queue.append(value)
-    return notFound
-
 def write_json(dic, filename, write_path):
     jsObj = json.dumps(dic, ensure_ascii=False,sort_keys=True, indent=4)
     filename=filename + ".json"
     if not os.path.exists(write_path):
         os.makedirs(write_path)
     file = os.path.join(write_path, filename)
-    if os.path.exists(file):
-        os.remove(file)
-    fileObject = open(file, 'a', encoding='utf-8')  
+    fileObject = open(file, 'w+', encoding='utf-8')  
     fileObject.write(jsObj)  
     fileObject.close()
 
 if os.path.exists(data_path):
-    inputs = input("检测到已存在数据！是否更新？(Y/n)：")
-    if inputs.lower() == "y":
+    inputs = input("检测到已存在数据文件夹！是否更新？(Y/n)：")
+    if inputs.lower() == "y" or inputs.lower() == "yes":
         data = GenshinInfoCrawer.GenshinInfoCrawer()
         weapon_info=data.get_weapon_info()
         characters=data.get_character_info()
@@ -48,9 +37,11 @@ if os.path.exists(data_path):
         for i in range(len(list(characters.keys()))):
             name = list(characters.keys())[i]
             character_data = characters[name]
+            if name == "旅行者（空/荧）":
+                name = "旅行者"
             write_path = os.path.join(data_path, "characters", name)
             write_json(character_data, 'zh_CN', write_path)
-    elif inputs.lower() == "n":
+    elif inputs.lower() == "n" or inputs.lower() == "no":
         exit()
     else:
         print("输入无效!")
