@@ -1,3 +1,6 @@
+import shutil
+from pathlib import Path
+
 import GenshinInfoCrawer
 import os
 import json
@@ -20,6 +23,14 @@ def write_json(dic, filename, write_path):
     fileObject.write(jsObj)  
     fileObject.close()
 
+def isTraveler():
+    traveler_path = os.path.join(data_path, "characters", "旅行者（空")
+    traveler = Path(traveler_path)
+    if traveler.is_dir():
+        shutil.move(os.path.join(traveler_path,"荧）") + "/zh_CN.json",traveler_path)
+    os.rmdir(os.path.join(traveler_path,"荧）"))
+    os.rename(os.path.join(data_path, "characters", "旅行者（空"),os.path.join(data_path, "characters", "旅行者"))
+
 if os.path.exists(data_path):
     inputs = input("检测到已存在数据文件夹！是否更新？(Y/n)：")
     if inputs.lower() == "y" or inputs.lower() == "yes":
@@ -37,13 +48,9 @@ if os.path.exists(data_path):
         for i in range(len(list(characters.keys()))):
             name = list(characters.keys())[i]
             character_data = characters[name]
-            if name == "旅行者（空/荧）":
-                name = "旅行者"
-                write_path = os.path.join(data_path, "characters", name)
-                write_json(character_data, 'zh_CN', write_path)
-            else:
-                write_path = os.path.join(data_path, "characters", name)
-                write_json(character_data, 'zh_CN', write_path)
+            write_path = os.path.join(data_path, "characters", name)
+            write_json(character_data, 'zh_CN', write_path)
+
     elif inputs.lower() == "n" or inputs.lower() == "no":
         exit()
     else:
@@ -66,6 +73,7 @@ else:
         character_data = characters[name]
         write_path = os.path.join(data_path, "characters", name)
         write_json(character_data, 'zh_CN', write_path)
+    isTraveler()
     
     
    
