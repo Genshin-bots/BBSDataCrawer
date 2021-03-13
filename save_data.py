@@ -11,7 +11,7 @@ path_name = "datas"
 data_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], path_name)
 
 def write_json(dic, filename, write_path):
-    jsObj = json.dumps(dic, ensure_ascii=False,sort_keys=True, indent=4)
+    jsObj = json.dumps(dic, ensure_ascii=False,sort_keys=False, indent=4)
     filename=filename + ".json"
     if not os.path.exists(write_path):
         os.makedirs(write_path)
